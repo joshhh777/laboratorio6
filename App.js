@@ -9,6 +9,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
+import PriTrans from './componentes/transferencias/pritrans';
+import SegTrans from './componentes/transferencias/segtrans';
+import TerTrans from './componentes/transferencias/tertrans';
 import { StyleSheet, 
   Text, 
   View, 
@@ -33,13 +36,14 @@ const provincias = [
   }
 ];
 
-const Stack = createStackNavigator();
+
+
 //const Tab = createBottomTabNavigator();
-const Tab  = createMaterialTopTabNavigator();
+const Tab  = createBottomTabNavigator();
 
 function PantallaInicial({navigation}) {
   return (
-    <View style={{flex:1, alignItems:'center', justifyContent:'center',marginTop:40}}>
+    <View style={{flex:1, alignItems:'center', justifyContent:'center',marginTop:70}}>
       <Text> Pantalla de Inicio Cancino</Text>
 
       <Button
@@ -59,12 +63,24 @@ function PantallaDetalles({navigation}) {
 
       <Button 
         title="Volver a la Primera Pantalla"
-        onPress={() => navigation.popToTop()}
+        onPress={() => navigation.navigate('Home')}
         />
        
     </View>
   )
 
+}
+
+const TransferenciasStack =  createStackNavigator();
+
+function TransferenciaStackScreen() {
+  return(
+    <TransferenciasStack.Navigator>
+      <TransferenciasStack.Screen name="Primero" component={PriTrans}/>
+      <TransferenciasStack.Screen name="Segundo" component={SegTrans}/>
+      <TransferenciasStack.Screen name="Tercero" component={TerTrans}/>
+    </TransferenciasStack.Navigator>
+  )
 }
 
 export default class App extends Component {
@@ -122,7 +138,15 @@ export default class App extends Component {
                     <MaterialComunityIcons name="home" color={color} size={size}/>
                  ),
                }}/>
-            <Tab.Screen name="Detalles" component={PantallaDetalles}
+              <Tab.Screen name="Transferencia" component={TransferenciaStackScreen}
+               options={{
+                 tabBarLabel: 'Transferencia',
+                 tabBarIcon: ({color, size}) => (
+                    <MaterialComunityIcons name="home" color={color} size={size}/>
+                 ),
+               }}/>
+               
+               <Tab.Screen name="Detalles" component={PantallaDetalles}
                options={{
                  tabBarLabel: 'Detalles',
                  tabBarIcon: ({color, size}) => (
